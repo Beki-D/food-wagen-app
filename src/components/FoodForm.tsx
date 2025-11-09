@@ -1,23 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Food, FoodFormData } from "@/types";
-
-interface FoodFormProps {
-  food?: Food;
-  onSubmit: (data: FoodFormData) => Promise<void>;
-  onCancel: () => void;
-  isLoading?: boolean;
-}
-
-interface FormErrors {
-  food_name?: string;
-  food_rating?: string;
-  food_image?: string;
-  restaurant_name?: string;
-  restaurant_logo?: string;
-  restaurant_status?: string;
-}
+import { FoodFormData, FoodFormProps, FormErrors } from "@/types";
 
 export default function FoodForm({ food, onSubmit, onCancel, isLoading = false }: FoodFormProps) {
   const [formData, setFormData] = useState<FoodFormData>({

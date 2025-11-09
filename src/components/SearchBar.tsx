@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-interface SearchBarProps {
-  onSearch: (query: string) => void;
-  placeholder?: string;
-}
+import { SearchBarProps } from "@/types";
 
 export default function SearchBar({ onSearch, placeholder = "Search for food items..." }: SearchBarProps) {
   const [query, setQuery] = useState("");

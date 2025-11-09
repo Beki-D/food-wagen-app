@@ -1,13 +1,7 @@
 "use client";
 
-import { Food } from "@/types";
+import { FoodCardProps } from "@/types";
 import Image from "next/image";
-
-interface FoodCardProps {
-  food: Food;
-  onEdit?: (food: Food) => void;
-  onDelete?: (id: string) => void;
-}
 
 export default function FoodCard({ food, onEdit, onDelete }: FoodCardProps) {
   return (
