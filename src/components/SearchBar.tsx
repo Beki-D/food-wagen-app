@@ -1,41 +1,74 @@
 "use client";
 
 import { useState } from "react";
+import { Motorbike, Handbag, Search } from "lucide-react";
 import { SearchBarProps } from "@/types";
 
-export default function SearchBar({ onSearch, placeholder = "Search for food items..." }: SearchBarProps) {
-  const [query, setQuery] = useState("");
+export default function SearchBar({
+  onSearch,
+  placeholder = "What do you like to eat today?",
+}: SearchBarProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [deliveryType, setDeliveryType] = useState<"delivery" | "pickup">(
+    "delivery"
+  );
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch(query);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setQuery(value);
-    // Real-time search
-    onSearch(value);
+    onSearch(searchQuery);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="food-search-form mb-6">
-      <div className="relative">
-        <input
-          type="text"
-          value={query}
-          onChange={handleInputChange}
-          placeholder={placeholder}
-          className="food-search-input w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          id="food-search"
-          data-test-id="food-search-input"
-        />
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </div>
+    <div className="bg-white rounded-2xl p-6 shadow-lg">
+      {/* Delivery/Pickup Toggle */}
+      <div className="flex mb-6">
+        <button
+          onClick={() => setDeliveryType("delivery")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+            deliveryType === "delivery"
+              ? "text-tertiary bg-orange-50"
+              : "text-gray-600 hover:text-tertiary"
+          }`}
+        >
+          <Motorbike size={20} />
+          Delivery
+        </button>
+        <button
+          onClick={() => setDeliveryType("pickup")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+            deliveryType === "pickup"
+              ? "text-tertiary bg-orange-50"
+              : "text-gray-600 hover:text-tertiary"
+          }`}
+        >
+          <Handbag size={20} />
+          Pickup
+        </button>
       </div>
-    </form>
+
+      {/* Search Form */}
+      <form onSubmit={handleSearch} className="flex gap-3">
+        <div className="flex-1 relative">
+          <Search
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            size={20}
+          />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={placeholder}
+            className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
+          />
+        </div>
+        <button
+          type="submit"
+          className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg transition-colors flex items-center gap-2"
+        >
+          <Search size={20} />
+          Find Meal
+        </button>
+      </form>
+    </div>
   );
 }

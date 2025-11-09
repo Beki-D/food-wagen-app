@@ -54,3 +54,11 @@ export interface SearchBarProps {
   onSearch: (query: string) => void;
   placeholder?: string;
 }
+
+export interface HeaderProps {
+  onAddMeal?: () => void;
+}
+
+export interface HeroSectionProps {
+  onSearch: (query: string) => void;
+}

@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import { fetchFoods, searchFoods, createFood, updateFood, deleteFood } from "@/lib/api";
 import { Food, FoodFormData } from "@/types";
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
 import FoodCard from "@/components/FoodCard";
-import SearchBar from "@/components/SearchBar";
 import Modal from "@/components/Modal";
 import FoodForm from "@/components/FoodForm";
 
@@ -130,19 +131,11 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">FoodWagen</h1>
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="food-add-btn bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-          data-test-id="food-add-btn"
-        >
-          Add Food
-        </button>
-      </div>
-
-      <SearchBar onSearch={handleSearch} />
+    <div className="min-h-screen bg-white">
+      <Header onAddMeal={() => setIsAddModalOpen(true)} />
+      <HeroSection onSearch={handleSearch} />
+      
+      <div className="container mx-auto px-4 py-8">
 
       {error && (
         <div className="food-error">
@@ -152,8 +145,8 @@ export default function Home() {
 
       {loading ? (
         <div className="food-loading">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-          <span className="ml-3 text-gray-600">Loading foods...</span>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <span className="ml-3 text-dark">Loading foods...</span>
         </div>
       ) : (
         <div className="food-grid">
@@ -174,6 +167,7 @@ export default function Home() {
           )}
         </div>
       )}
+      </div>
 
       {/* Add Food Modal */}
       <Modal
