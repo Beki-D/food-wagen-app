@@ -62,3 +62,16 @@ export interface HeaderProps {
 export interface HeroSectionProps {
   onSearch: (query: string) => void;
 }
+
+export interface FeaturedMealsProps {
+  foods: Food[];
+  onEdit?: (food: Food) => void;
+  onDelete?: (id: string) => void;
+  onLoadMore?: () => void;
+}
+
+export interface FeaturedFoodCardProps {
+  food: Food;
+  onEdit?: (food: Food) => void;
+  onDelete?: (id: string) => void;
+}

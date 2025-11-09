@@ -5,7 +5,7 @@ import { fetchFoods, searchFoods, createFood, updateFood, deleteFood } from "@/l
 import { Food, FoodFormData } from "@/types";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import FoodCard from "@/components/FoodCard";
+import FeaturedMeals from "@/components/FeaturedMeals";
 import Modal from "@/components/Modal";
 import FoodForm from "@/components/FoodForm";
 
@@ -135,39 +135,36 @@ export default function Home() {
       <Header onAddMeal={() => setIsAddModalOpen(true)} />
       <HeroSection onSearch={handleSearch} />
       
-      <div className="container mx-auto px-4 py-8">
-
       {error && (
-        <div className="food-error">
-          {error}
+        <div className="container mx-auto px-4">
+          <div className="food-error">
+            {error}
+          </div>
         </div>
       )}
 
       {loading ? (
-        <div className="food-loading">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          <span className="ml-3 text-dark">Loading foods...</span>
+        <div className="container mx-auto px-4 py-16">
+          <div className="food-loading">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            <span className="ml-3 text-dark">Loading foods...</span>
+          </div>
         </div>
+      ) : foods.length > 0 ? (
+        <FeaturedMeals
+          foods={foods}
+          onEdit={openEditModal}
+          onDelete={handleDeleteFood}
+          onLoadMore={() => console.log('Load more clicked')}
+        />
       ) : (
-        <div className="food-grid">
-          {foods.length > 0 ? (
-            foods.map((food, index) => (
-              <FoodCard
-                key={`${food.id}-${index}`}
-                food={food}
-                onEdit={openEditModal}
-                onDelete={handleDeleteFood}
-              />
-            ))
-          ) : (
-            <div className="col-span-full text-center py-12">
-              <p className="text-gray-500 text-lg">No foods found</p>
-              <p className="text-gray-400">Try adjusting your search or add a new food item</p>
-            </div>
-          )}
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <p className="text-gray-500 text-lg">No foods found</p>
+            <p className="text-gray-400">Try adjusting your search or add a new food item</p>
+          </div>
         </div>
       )}
-      </div>
 
       {/* Add Food Modal */}
       <Modal
